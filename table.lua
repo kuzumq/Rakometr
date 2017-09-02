@@ -64,7 +64,7 @@ RAKOMETR.SPELLTABLE = {
 		-- Утроба душ
 		
 			--Имирон
-			['Крики мертвых'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Имирон(не выбежал)", role = 'TANK;DAMAGER;HEALER'},
+			['Крики мертвых'] = {dmgtype = 'aura', frendlyfire = false, encounter = "Имирон(не выбежал)", role = 'TANK;DAMAGER;HEALER'},
 			['Погибель'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Имирон(вращающиеся круги на земле)", role = 'TANK;DAMAGER;HEALER'},
 			--Харбарон
 			['Космическая коса'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Харбарон(не отбежал)", role = 'TANK;DAMAGER;HEALER'},

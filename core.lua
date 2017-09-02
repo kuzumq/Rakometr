@@ -551,7 +551,6 @@ function RAKOMETR:COMBAT_LOG_EVENT_UNFILTERED(_, _, subtype, _, sourceGUID, sour
 						
 					if dmgtype:match('hit') == 'hit' then
 						
-						print(1)
 						self:AddPlayer(destName, spellID, encounter)
 						self:AddDelay(destName,spellID, stamp)
 							
@@ -574,7 +573,6 @@ function RAKOMETR:COMBAT_LOG_EVENT_UNFILTERED(_, _, subtype, _, sourceGUID, sour
 							
 								if currentTime - self.DATA.PERIODIC[destName][spellID].lastHitTime >= timePeriod then
 									
-									print(2)
 									self.DATA.PERIODIC[destName] = nil
 									self:AddPlayer(destName, spellID, encounter)
 									self:AddDelay(destName,spellID, stamp)
@@ -596,6 +594,15 @@ function RAKOMETR:COMBAT_LOG_EVENT_UNFILTERED(_, _, subtype, _, sourceGUID, sour
 							
 						end
 								
+					end
+					
+				elseif subtype == 'SPELL_AURA_APPLIED' then
+				
+					if dmgtype:match('aura') == 'aura' then
+					
+						self:AddPlayer(destName, spellID, encounter)
+						self:AddDelay(destName,spellID, stamp)
+					
 					end
 					
 				else
