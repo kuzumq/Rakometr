@@ -166,7 +166,7 @@ function RAKOMETR:OnEnable()
 				text = 'to party/raid',
 				notCheckable = 1,
 				func = function()
-				RAKOMETR:SendReport(prCheck())
+				RAKOMETR:SendReport(groupCheck())
 				end
 			},
 			{
@@ -513,7 +513,7 @@ function RAKOMETR:COMBAT_LOG_EVENT_UNFILTERED(_, _, subtype, _, sourceGUID, sour
 
 	-- start
 	if notDelay and destName and (self.SPELLTABLE[spellName] or self.SPELLTABLE[spellID]) then
-	print(notDelay)
+	
 		local destRole = UnitGroupRolesAssigned(destName)
 		local encounter
 		local tableRole

@@ -7,7 +7,7 @@ RAKOMETR.SPELLTABLE = {
 	{
 	
 		dmgtype = 'hit',-- Тип урона, если лужа/переодический урон пишем 'dot;n;t' где t = сколько секунд допустимо простоять в луже, n - сколько раз тикнуло по игроку.
-						-- 'hit' - единичный удар
+						-- 'hit' - единичный удар, 'aura' - дебафы
 						
 		frendlyfire = false, -- Урон по союзникам(в разработке, пока что оставляем false)
 		encounter = 'In Zone', -- Описание
@@ -15,6 +15,7 @@ RAKOMETR.SPELLTABLE = {
 	
 	},
 	]]
+	
 	-- Миф +
 	['Вулканический шлейф'] = {dmgtype = 'hit', frendlyfire = false, encounter = 'In Zone', role = 'TANK;DAMAGER;HEALER'},
 	
@@ -28,7 +29,7 @@ RAKOMETR.SPELLTABLE = {
 		--Драконы
 		--['Дремотный кошмар'] = {encounter = "Драконы кошмара(10й стак)", role = 'TANK;DAMAGER;HEALER'},
 			--Таэрар
-			['Сочащийся туман'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Таэрар(сон)", role = 'TANK;DAMAGER;HEALER'},
+			['Сочащийся туман'] = {dmgtype = 'aura', frendlyfire = false, encounter = "Таэрар(сон)", role = 'TANK;DAMAGER;HEALER'},
 	
 	-- 5ppl
 	
