@@ -21,7 +21,7 @@ RAKOMETR.SPELLTABLE = {
 	-- ИК
 		
 		-- Низендра
-		['Взрывоопасная гниль'] = {dmgtype = 'hit', frendlyfire = false, encounter = 'Низендра(жуки)', role = 'TANK;DAMAGER;HEALER'},
+		[203646] = {dmgtype = 'hit', frendlyfire = false, encounter = 'Низендра(жуки)', role = 'TANK;DAMAGER;HEALER'},
 		['Заразное дыхание'] = {dmgtype = 'hit', frendlyfire = false, encounter = 'Низендра(дыхание)', role = 'TANK;DAMAGER;HEALER'}, 
 		--Ил'гинот, Сердце Порчи
 		['Око судьбы'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Ил'гинот(стоял перед лицом адда)", role = 'DAMAGER;HEALER'},
