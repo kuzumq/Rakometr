@@ -1,0 +1,9 @@
+## Title: !|r[|cffFFA500Rakometr|r]
+## Notes: Топ ракалов
+## Interface: 70000
+## Version: 0.1
+## Author: Kuzum
+## SavedVariables: RAKOMETR_DB
+
+files.xml
+
