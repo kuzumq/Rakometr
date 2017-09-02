@@ -477,14 +477,14 @@ function RAKOMETR:COMBAT_LOG_EVENT_UNFILTERED(_, _, subtype, _, sourceGUID, sour
 			
 		end
 		
-		if tableRole:match(destRole) == tableRole or destRole == 'NONE' then
-		
+		if tableRole:match(destRole) == destRole or destRole == 'NONE' then
+			print(spellName)
 			if frendlyfire then
 		
-				return false
+				self:AddPlayer(sourceName, spellID, encounter)
 					
 			elseif not frendlyfire and (not UnitPlayerOrPetInParty(sourceName)) then -- игнорируем если источник игрок и нет ФФ
-			
+				
 				if subtype == 'SPELL_DAMAGE' or subtype == 'SPELL_PERIODIC_DAMAGE' then
 
 					if dmg > 1 then -- игнор если не получил урона

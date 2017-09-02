@@ -1,6 +1,7 @@
 RAKOMETR.SPELLTABLE = {
 
 	-- Шаблон:
+	--[[
 	
 	['Имя спела'] = -- спелл, можно указывать ID(без ковычек)
 	{
@@ -13,7 +14,7 @@ RAKOMETR.SPELLTABLE = {
 		role = 'TANK;DAMAGER;HEALER' -- Роль для которой данный спел актуален(допустим словить дыхание в ебало актуально только для дд и хилов, но не для танка, тогда будет так: 'DAMAGER;HEALER'.
 	
 	},
-	
+	]]
 	-- Миф +
 	['Вулканический шлейф'] = {dmgtype = 'hit', frendlyfire = false, encounter = 'In Zone', role = 'TANK;DAMAGER;HEALER'},
 	
@@ -40,14 +41,22 @@ RAKOMETR.SPELLTABLE = {
 			
 		-- Око азщары
 			
+			--Треш
+			['Водомет'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Треш", role = 'TANK;DAMAGER;HEALER'},
+			['Жесткая слизь'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Треш", role = 'TANK;DAMAGER;HEALER'},
+			
 			--Паржеш
-			['Пронзающее копье'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Уларогг(каменные руки)", role = 'TANK;DAMAGER;HEALER'},
+			['Пронзающее копье'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Паржеш(Копье, не забежал за моба)", role = 'TANK;DAMAGER;HEALER'},
+			['Сокрушительная волна'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Паржеш(волна, не отбежал)", role = 'TANK;DAMAGER;HEALER'},
 			--Леди
 			['Кольцо молний'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Леди(не забежал на песок)", role = 'TANK;DAMAGER;HEALER'},
 			--Волнобород
-			['Взрыв газа'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Волнобород(не сбил пузырь газа)", role = 'TANK;DAMAGER;HEALER'},
+			['Взрыв газа'] = {dmgtype = 'hit', frendlyfire = true, encounter = "Волнобород(не сбил пузырь газа)", role = 'TANK;DAMAGER;HEALER'},
 			--Гнев азшары
 			['Приливная волна'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Гнев азшары(попал в волну)", role = 'TANK;DAMAGER;HEALER'},
+			['Поражение молнией'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Гнев азшары(молния)", role = 'TANK;DAMAGER;HEALER'},
+			['Волщебный торнадо'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Гнев азшары(молния)", role = 'TANK;DAMAGER;HEALER'},
+			['Потоп'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Гнев азшары(молния)", role = 'TANK;DAMAGER;HEALER'},
 			
 		-- Утроба душ
 		
