@@ -71,11 +71,12 @@ function RAKOMETR:SendReport(ch)
 	for name, t in pairs(self.DATA.UNITS) do
 		
 		tinsert(temp, {name = name, total = t.total})
-		count = count + 1
 	
 	end
 	
 	tsort(temp, function(a,b) return a.total > b.total end)
+	
+	if #temp < 1 then return end
 	
 	SendChatMessage('[RAKOMETR TOP]:', ch)
 	
@@ -92,7 +93,7 @@ function RAKOMETR:SendReport(ch)
 	for i=1, num do
 		
 		local obj = temp[i]
-		SendChatMessage(obj.total..' '..obj.name)
+		SendChatMessage(obj.total..' '..obj.name, ch)
 	
 	end
 
@@ -447,14 +448,72 @@ function RAKOMETR:AddPlayer(pname, spell, encounter)
 	
 end
 
+local delay = 0.05
+
+function RAKOMETR:AddDelay(name,spell, stamp)
+
+	if RAKOMETR.DATA.WAIT[name] then
+	
+		if RAKOMETR.DATA.WAIT[name][spell] then
+			
+			if stamp - RAKOMETR.DATA.WAIT[name][spell].lastHitTime >= delay then
+			
+				RAKOMETR.DATA.WAIT[name] = nil
+				
+			end
+			
+		else
+		
+			RAKOMETR.DATA.WAIT[name][spell] = {lastHitTime = stamp}
+		
+		end
+		
+	else
+	
+		RAKOMETR.DATA.WAIT[name] = {}
+		RAKOMETR.DATA.WAIT[name][spell] = {lastHitTime = stamp}
+		
+	end
+
+end
+
+function RAKOMETR:CheckDelay(name, spell, stamp)
+
+	if RAKOMETR.DATA.WAIT[name] then
+		
+		if RAKOMETR.DATA.WAIT[name][spell] then
+			
+			local lastHitTime = RAKOMETR.DATA.WAIT[name][spell].lastHitTime
+			
+			if stamp - lastHitTime < delay then
+				
+				return false
+				
+			else
+			
+				RAKOMETR.DATA.WAIT[name] = nil
+				return true
+				
+			end
+			
+		end
+		
+	end
+	
+	return true
+
+end
+
 function RAKOMETR:COMBAT_LOG_EVENT_UNFILTERED(_, _, subtype, _, sourceGUID, sourceName, _, _, destGUID, destName, _, _, spellID, spellName, _, dmg)
 
 	local stamp = GetTime()
+	local notDelay = self:CheckDelay(destName, spellID, stamp)
 	
 	if not UnitIsPlayer(destName) then return end -- игнорируем если цель не игрок
 
-	if destName and (self.SPELLTABLE[spellName] or self.SPELLTABLE[spellID]) then
-	
+	-- start
+	if notDelay and destName and (self.SPELLTABLE[spellName] or self.SPELLTABLE[spellID]) then
+	print(notDelay)
 		local destRole = UnitGroupRolesAssigned(destName)
 		local encounter
 		local tableRole
@@ -478,77 +537,74 @@ function RAKOMETR:COMBAT_LOG_EVENT_UNFILTERED(_, _, subtype, _, sourceGUID, sour
 		end
 		
 		if tableRole:match(destRole) == destRole or destRole == 'NONE' then
-			print(spellName)
+		
 			if frendlyfire then
 		
 				self:AddPlayer(sourceName, spellID, encounter)
+				self:AddDelay(sourceName,spellID, stamp)
 					
 			elseif not frendlyfire and (not UnitPlayerOrPetInParty(sourceName)) then -- игнорируем если источник игрок и нет ФФ
 				
-				if subtype == 'SPELL_DAMAGE' or subtype == 'SPELL_PERIODIC_DAMAGE' then
-
-					if dmg > 1 then -- игнор если не получил урона
-					
-						if dmgtype:match('hit') == 'hit' then
+				if subtype == 'SPELL_DAMAGE' then
+				
+					if dmg <= 1 then return false end -- ignore
+						
+					if dmgtype:match('hit') == 'hit' then
+						
+						print(1)
+						self:AddPlayer(destName, spellID, encounter)
+						self:AddDelay(destName,spellID, stamp)
 							
-							self:AddPlayer(destName, spellID, encounter)
+					end
 						
-						elseif dmgtype:match('dot') == 'dot' then
+				elseif subtype == 'SPELL_PERIODIC_DAMAGE' then
 						
-							local _, maxTicks, timePeriod = strsplit(';', dmgtype, 3)
-							local maxTicks, timePeriod = tonumber(maxTicks), tonumber(timePeriod)
+					if dmgtype:match('dot') == 'dot' then
 						
-							if self.DATA.PERIODIC[destName] then
+						local _, maxTicks, timePeriod = strsplit(';', dmgtype, 3)
+						local maxTicks, timePeriod = tonumber(maxTicks), tonumber(timePeriod)
+						
+						if self.DATA.PERIODIC[destName] then
 							
-								if self.DATA.PERIODIC[destName][spellID] then
+							if self.DATA.PERIODIC[destName][spellID] then
 								
-									local currentTime = GetTime()
+								local currentTime = GetTime()
 									
-									self.DATA.PERIODIC[destName][spellID].total = self.DATA.PERIODIC[destName][spellID].total + 1
-								
+								self.DATA.PERIODIC[destName][spellID].total = self.DATA.PERIODIC[destName][spellID].total + 1
+							
+								if currentTime - self.DATA.PERIODIC[destName][spellID].lastHitTime >= timePeriod then
 									
-									--if self.DATA.PERIODIC[destName][spellID].total >= maxTicks then
+									print(2)
+									self.DATA.PERIODIC[destName] = nil
+									self:AddPlayer(destName, spellID, encounter)
+									self:AddDelay(destName,spellID, stamp)
 									
-										if currentTime - self.DATA.PERIODIC[destName][spellID].lastHitTime >= timePeriod then -- Если получает больше N тиков за X промежуток времени
-									
-											self.DATA.PERIODIC[destName] = nil -- Обнуляем
-											self:AddPlayer(destName, spellID, encounter)
-									
-										end
-									
-									--else
-										
-										--self.DATA.PERIODIC[destName][spellID].lastHitTime = stamp
-									
-									--end
-									
-									
-								else
-								
-									self.DATA.PERIODIC[destName][spellID] = {}
-									self.DATA.PERIODIC[destName][spellID] = {total = 1, lastHitTime = stamp}
-								
 								end
-								
+									
 							else
-							
-								self.DATA.PERIODIC[destName] = {}
+								
 								self.DATA.PERIODIC[destName][spellID] = {}
 								self.DATA.PERIODIC[destName][spellID] = {total = 1, lastHitTime = stamp}
 							
 							end
+								
+						else
 							
-						
+							self.DATA.PERIODIC[destName] = {}
+							self.DATA.PERIODIC[destName][spellID] = {}
+							self.DATA.PERIODIC[destName][spellID] = {total = 1, lastHitTime = stamp}
+							
 						end
-					
+								
 					end
 					
 				else
 					
 					self:AddPlayer(destName, spellID, encounter)
-					
+					self:AddDelay(destName,spellID, stamp)
+						
 				end
-			
+					
 			end
 
 		end

@@ -42,21 +42,24 @@ RAKOMETR.SPELLTABLE = {
 		-- Око азщары
 			
 			--Треш
-			['Водомет'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Треш", role = 'TANK;DAMAGER;HEALER'},
-			['Жесткая слизь'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Треш", role = 'TANK;DAMAGER;HEALER'},
+			[195217] = {dmgtype = 'hit', frendlyfire = false, encounter = "Треш", role = 'TANK;DAMAGER;HEALER'},
+			[195473] = {dmgtype = 'hit', frendlyfire = false, encounter = "Треш", role = 'DAMAGER;HEALER'},
+			['Бурлящая буря'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Треш", role = 'TANK;DAMAGER;HEALER'},
 			
 			--Паржеш
-			['Пронзающее копье'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Паржеш(Копье, не забежал за моба)", role = 'TANK;DAMAGER;HEALER'},
-			['Сокрушительная волна'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Паржеш(волна, не отбежал)", role = 'TANK;DAMAGER;HEALER'},
+			[191977] = {dmgtype = 'hit', frendlyfire = false, encounter = "Паржеш(Копье, не забежал за моба)", role = 'TANK;DAMAGER;HEALER'},
+			['Сокрушительная волна'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Паржеш(волна, не отбежал)", role = 'DAMAGER;HEALER'},
 			--Леди
-			['Кольцо молний'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Леди(не забежал на песок)", role = 'TANK;DAMAGER;HEALER'},
+			[193597] = {dmgtype = 'hit', frendlyfire = false, encounter = "Леди(не забежал на песок)", role = 'TANK;DAMAGER;HEALER'},
 			--Волнобород
 			['Взрыв газа'] = {dmgtype = 'hit', frendlyfire = true, encounter = "Волнобород(не сбил пузырь газа)", role = 'TANK;DAMAGER;HEALER'},
 			--Гнев азшары
 			['Приливная волна'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Гнев азшары(попал в волну)", role = 'TANK;DAMAGER;HEALER'},
-			['Поражение молнией'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Гнев азшары(молния)", role = 'TANK;DAMAGER;HEALER'},
+			
+			[192794] = {dmgtype = 'hit', frendlyfire = false, encounter = "Гнев азшары(молния)", role = 'TANK;DAMAGER;HEALER'},
+			
 			['Волщебный торнадо'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Гнев азшары(молния)", role = 'TANK;DAMAGER;HEALER'},
-			['Потоп'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Гнев азшары(молния)", role = 'TANK;DAMAGER;HEALER'},
+			['Потоп'] = {dmgtype = 'hit', frendlyfire = false, encounter = "Гнев азшары(не выбежал)", role = 'TANK;DAMAGER;HEALER'},
 			
 		-- Утроба душ
 		
